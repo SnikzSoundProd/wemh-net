@@ -129,8 +129,8 @@ M_HYPS = 3
 model = WEMH_MDM(vocab_size=VOCAB_SIZE, d_model=128, n_heads=4, n_layers=2, M=M_HYPS)
 optimizer = optim.Adam(model.parameters(), lr=0.003)
 
-BATCH_SIZE = 32
-EPOCHS = 400
+BATCH_SIZE = 64
+EPOCHS = 1000
 
 print("Начинаем обучение на физических формулах и логике...")
 model.train()
