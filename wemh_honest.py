@@ -206,4 +206,4 @@ def denoise_generation(prompt_str, diffusion_steps=5):
 # 1. Продолжение формулы
 denoise_generation("force = ")
 # 2. Логический вывод (не видели в таком виде на обучении, но видели паттерн)
-denoise_generation("mass=5,accel=5->")
+denoise_generation("mass=3,accel=4->")
