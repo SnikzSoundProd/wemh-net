@@ -130,7 +130,7 @@ model = WEMH_MDM(vocab_size=VOCAB_SIZE, d_model=128, n_heads=4, n_layers=2, M=M_
 optimizer = optim.Adam(model.parameters(), lr=0.003)
 
 BATCH_SIZE = 32
-EPOCHS = 600
+EPOCHS = 400
 
 print("Начинаем обучение на физических формулах и логике...")
 model.train()
@@ -195,7 +195,8 @@ def denoise_generation(prompt_str, diffusion_steps=5):
         
         # Диффузионный апдейт: размаскируем только часть токенов (confidence-based)
         # Для простоты PoC размаскируем все сразу, но в реальном MDM мы бы обновляли по 1/T токенов.
-        x_tensor[mask == 1] = pred_idx[mask == 1]
+        mask_1d = mask[0] == 1
+        x_tensor[0, mask_1d] = pred_idx[mask_1d]
         
         print(f"Step {step} (Branch {best_m+1}): '{decode(x_tensor[0].tolist())}'")
         
