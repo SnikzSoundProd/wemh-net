@@ -50,10 +50,11 @@ class BidirectionalReasoningEngine(nn.Module):
         
         # Эмбеддим Дано (A)
         premise_emb = self.emb(premise) # (B, seq_len, d_model)
+        premise_expanded = premise_emb.unsqueeze(0).expand(self.M, B, seq_len, self.d_model)
         
         # Инициализируем промежуточные шаги рассуждения (B, C) и ответ (D) чистым шумом
         # У нас self.steps шагов. 0-й это premise.
-        reasoning_chain = [premise_emb]
+        reasoning_chain = [premise_expanded]
         for _ in range(self.steps - 1):
             # M параллельных гипотез (разный шум)
             noise = torch.randn(self.M, B, seq_len, self.d_model)
@@ -64,7 +65,7 @@ class BidirectionalReasoningEngine(nn.Module):
         # Шаг t смотрит на шаг t-1 и шаг t+1 одновременно.
         
         for i in range(diffusion_iters):
-            new_chain = [premise_emb.unsqueeze(0).expand(self.M, B, seq_len, self.d_model)]
+            new_chain = [premise_expanded]
             
             for step in range(1, self.steps):
                 # Собираем контекст из прошлого и БУДУЩЕГО шага (Bidirectional!)
