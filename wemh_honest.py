@@ -49,7 +49,7 @@ def encode(s):
 def decode(idx_list):
     return "".join([idx2char[i] for i in idx_list])
 
-SEQ_LEN = 24
+SEQ_LEN = 32
 
 # Паддинг датасета
 encoded_data = []
@@ -206,4 +206,4 @@ def denoise_generation(prompt_str, diffusion_steps=5):
 # 1. Продолжение формулы
 denoise_generation("force = ")
 # 2. Логический вывод (не видели в таком виде на обучении, но видели паттерн)
-denoise_generation("mass=3,accel=4->")
+denoise_generation("mass=5,accel=5->")
